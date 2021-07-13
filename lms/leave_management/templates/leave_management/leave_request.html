@@ -1,0 +1,120 @@
+{% extends 'leave_management/index.html' %}
+{% load static %}
+{% block content%}
+
+
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">View Leave Request</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+<!--              <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+<!--              <li class="breadcrumb-item active"><a href="{% url 'dashboard' %}">Dashboard</a></li>-->
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    <!-- /.content-header -->
+
+
+
+<!--stylesheet of table	-->
+<style>
+      .tableFixHead {
+        overflow-y: auto;
+        height: 500px;
+      }
+      .tableFixHead thead th {
+        position: sticky;
+        top: 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+      }
+      th {
+        background: #eee;
+      }
+    </style>
+
+<form method="post" >
+	 {% csrf_token %}
+ <div class="modal" id="rejectModal">
+	 <div class="modal-dialog">
+		 <div class="modal-content">
+			 <div class="modal-header">
+				 <h1 class="modal-title">Reason for Leave Rejection</h1>
+				 <button type="button" class="close" data-dismiss="modal">
+					 <span>&times;</span>
+				 </button>
+			 </div>
+			 <div class="modal-body">
+				 <textarea class="reject_reason" id="reject_reason"  name="reason_for_rejection" rows="3" cols="55" placeholder=""></textarea>
+			 </div>
+			 <div class="modal-footer">
+				  <button class="btn btn-primary" type="submit" value="Reject" name="status">Submit</button>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+
+
+	<div>
+	  <button class="btn btn-primary" type="submit" value="Approve" name="status" >Approve</button>
+      <button class="btn btn-primary" type="button" value="Reject" name="status" data-toggle="modal" data-target="#rejectModal">Reject</button>
+      <a href="" class="btn btn-primary"   onclick="window.location.reload">Cancel</a>
+	</div><br>
+    <p>Leave request</p>
+            <div class="tableFixHead ">
+				<table class="table table-striped table-responsive-md btn-table">
+					<thead>
+						<th>Employee Name</th>
+						<th>Designation</th>
+						<th>Subject</th>
+						<th>Application Date</th>
+						<th>From Date</th>
+						<th>To Date</th>
+						<th>Reason</th>
+						<th>Total Taken Leave</th>
+						<th>Remaining Leave</th>
+						<th>Status</th>
+						<th>Approval</th>
+
+					</thead>
+					<tbody>
+						{% for i in leave_form %}
+						<tr>
+							<td>{{i.employee_name}}</td>
+							<td>{{i.leave_per_year}}</td>
+							<td>{{i.leave_type.leave_name}}</td>
+							<td>{{i.application_date}}</td>
+							<td>{{i.from_date}}</td>
+							<td>{{i.till_date}}</td>
+							<td>{{i.remark}}</td>
+							<td>{{i.total_taken_leave}}</td>
+							<td>{{i.remaining_leave}}</td>
+							<td>{{i.status}}</td>
+							<td><input type="checkbox" name="approval" value="{{i.id}}"></td>
+
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+</form>
+
+
+
+
+</div>
+
+
+{% endblock %}

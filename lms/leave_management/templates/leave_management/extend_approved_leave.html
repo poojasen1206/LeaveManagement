@@ -1,0 +1,236 @@
+{% extends 'leave_management/index.html' %}
+{% load static %}
+{% block content%}
+
+
+<div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Extend Approved Leave Form</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+
+    <!-- /.content-header -->
+
+
+<form class="needs-validation"   id="leaveForm" method="post" action=" " autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="form-row">
+    <div class="col-md-3 mb-3">
+      <label for="validationCustom01">Employee name</label>
+      <input type="text" class="form-control" name="employee_name" id="employee_name" placeholder="Employee Name" value="{{extend_approved_leave.employee_name}}" required>
+
+    </div>
+      <div class="col-md-3 mb-3">
+      <label for="date">Application Date</label>
+      <input   class="form-control" id="current_Date" name="current_date" >
+      </div>
+    </div>
+
+  <div class="form-row">
+    <div class="col-md-3 mb-3">
+      <label for="leave_type">Leave Type :</label>
+      <input  class="form-control" value="{{extend_approved_leave.leave_type.leave_name}}">
+      <input type="hidden"  id="leave_type" name="leave_type" class="form-control"  value="{{extend_approved_leave.leave_type_id}}">
+
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="remaining_leave">Remaining Leave</label>
+      <input type="text" class="form-control" name="remaining_leave" id="remaining_leave" placeholder="Remaining Leave" value="{{extend_approved_leave.remaining_leave}}">
+     </div>
+  </div>
+
+   <div class="form-row">
+      <div class="col-md-3 mb-3">
+          <label for="date">Previous From Date</label>
+          <input class="form-control" value="{{extend_approved_leave.from_date}}">
+      </div>
+      <div class="col-md-3 mb-3">
+          <label for="date">Previous Till Date</label>
+          <input class="form-control" value="{{extend_approved_leave.till_date}}">
+      </div>
+  </div>
+
+   <div class="form-row">
+     <div class="col-md-3 mb-3">
+      <label for="date">From Date</label>
+      <input type="text"  class="form-control" id="from_date" name="from_date"  onchange ="daysDifference()" placeholder="mm-dd-yyyy">
+    </div>
+
+    <div class="col-md-3 mb-3">
+      <label for="date">Till Date</label>
+      <input type="text" onload="getDate()" class="form-control" id="till_date" name="till_date" onchange ="daysDifference()" placeholder="mm-dd-yyyy">
+    </div>
+   </div>
+   Total leave applied for days :<h style="color:32A80F" id="result" class="total_taken_leave" name="total_taken_leave"  ></h>
+    <div>
+        <input type="hidden" name="total_taken_leave" id="total_taken_leave">
+	</div>
+
+
+
+    <br>
+   <div class="col-md-6 mb-3">
+       <label for="full_day">Full Day :</label>
+       <input type="radio"  name="day" id="full_day" value="1">
+       <label for="half_day">Half Day :</label>
+       <input type="radio"  name="day" id="half_day" value="0.5">
+   </div>
+
+
+
+   <div class="form-row">
+     <div class="col-md-6 mb-3">
+   <label for="remark">Remark</label>
+
+   <input class="form-control" name="remark" id="remark" placeholder="remark" value="{{extend_approved_leave.remark}}" ></input>
+     </div>
+   </div>
+   <div class="form-row">
+     <div class="col-md-6 mb-3">
+       <label for="myfile">Attachment</label>
+       <input type="file" id="myfile" name="myfile" class="form-control" accept="application/pdf">
+   </div>
+   </div>
+   <div>
+       <input type="hidden" name="status" value="pending" id="status">
+   </div>
+
+      <button class="btn btn-primary" type="submit">Apply</button>
+     <a href="" class="btn btn-primary" onclick="window.location.reload">Reset</a>
+</form>
+</div>
+
+<!--This date is start from 14 days before,from today's date.-->
+<script src="https://code.jquery.com/jquery-1.9.1.min.js" integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script>
+<script>
+
+$(function() {
+
+   $( "#from_date" ).datepicker({minDate: 0});
+
+  });
+
+$(function() {
+    $( "#till_date" ).datepicker({minDate: 0});
+  });
+
+</script>
+
+<!--This date is start from today's date.(from-date)-->
+<script>
+/*
+   var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("from_date")[0].setAttribute('min', today);
+    */
+</script>
+
+<!--This date is start from today's date.(till_date)-->
+<script>
+/*
+   var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("till_date")[0].setAttribute('min', today);
+    */
+</script>
+
+
+
+<!--This is a normal datepicker-->
+<script>
+/*  function getDate(){
+    var today = new Date();
+
+document.getElementById("till_date").value = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
+} */
+</script>
+
+
+
+<!--For current date -->
+<script>
+var date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1;
+var year = date.getFullYear();
+
+if (month < 10) month = "0" + month;
+if (day < 10) day = "0" + day;
+
+var today = year + "-" + month + "-" + day
+
+document.getElementById('current_Date').value = today;
+
+</script>
+
+
+
+
+<!--Day difference between two datapikcer -->
+<script>
+function daysDifference() {
+         //define two variables and fetch the input from HTML form
+         var date1 = document.getElementById("from_date").value ;
+         var dateI1 = date1.replace(/(\d\d)\/(\d\d)\/(\d{4})/, "$3-$1-$2");
+
+         var date2 = document.getElementById("till_date").value;
+         var dateI2 = date2.replace(/(\d\d)\/(\d\d)\/(\d{4})/, "$3-$1-$2");
+
+         if (dateI2 != ''){
+
+         $.ajax({
+                type : "POST",
+                url: "{% url 'leave_management:ajax_posting' %}",
+                data: {
+                 date1 :dateI1,
+                 date2 : dateI2,
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+
+                },
+
+                success: function(data){
+                   document.getElementById("result").innerHTML = data.count ;
+                    document.getElementById("total_taken_leave").value = data.count ;
+                },
+
+                failure: function() {
+
+                }
+
+            });
+
+         }
+
+         }
+
+
+</script>
+
+
+
+
+
+<!--Script for onchange leave type in form so that reamaining leave is display-->
+<script>
+function LeaveType(leaveval) {
+
+
+{% for key, value in leave_dict.items %}
+if (leaveval == {{key}}) {
+  document.getElementById("remaining_leave").value = {{value}};
+}
+{% endfor%}
+};
+</script>
+
+
+{% endblock %}

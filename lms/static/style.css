@@ -1,0 +1,10 @@
+#form #id_username, #id_password {
+    overflow: visible;
+    width: 100%;
+    padding: 7px;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+}
+#form .errorlist.nonfield{
+  color:red;
+}
