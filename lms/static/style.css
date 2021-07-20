@@ -162,7 +162,7 @@ td, .table th {
     left: 16px;top:-2px;
 }
 
-/* Switch Primary */
+
 .checkbox.checbox-switch.switch-primary label > input:checked + span,
 .checkbox-inline.checbox-switch.switch-primary > input:checked + span {
     background-color: rgb(0, 105, 217);
