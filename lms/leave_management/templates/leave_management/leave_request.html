@@ -3,50 +3,213 @@
 {% block content%}
 
 
+<form method="post" >
+	 {% csrf_token %}
 <div class="content-header">
-      <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">View Leave Request</h1>
+
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-<!--              <li class="breadcrumb-item"><a href="#">Home</a></li>-->
-<!--              <li class="breadcrumb-item active"><a href="{% url 'dashboard' %}">Dashboard</a></li>-->
+              <li class="breadcrumb-item"><a href="#">Leave Request</a></li>
+              <li class="breadcrumb-item active"><a href="{% url 'dashboard' %}">Dashboard</a></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    <!-- /.content-header -->
+<!--		<div class="row">-->
+<!--		  <div class="col-12">-->
+<!--             <div class="card card-outline card-primary">-->
+<!--              <div class="card-header py-2">-->
+<!--                <h3 class="card-title"> Leave Request</h3>-->
+<!--                &lt;!&ndash; /.card-tools &ndash;&gt;-->
+<!--              </div>-->
+<!--              &lt;!&ndash; /.card-header &ndash;&gt;-->
+<!--              <div class="card-body">-->
+<!--					<div class="tableFixHead expendtbl" >-->
+<!--						<div class="mb-3">-->
+<!--						  <button class="btn btn-primary" type="submit" value="Approve" name="status" >Approve</button>-->
+<!--						  <button class="btn btn-primary" type="button" value="Reject" name="status" data-toggle="modal" data-target="#rejectModal">Reject</button>-->
+<!--						  <a href="" class="btn btn-primary"   onclick="window.location.reload">Cancel</a>-->
+<!--						</div>-->
+<!--			&lt;!&ndash;	<button id="btn-show-all-doc">Expand / Collapse</button>&ndash;&gt;-->
+<!--					  <table id="emp_leave_tbl" class="table table-bordered table-striped commonDatatable table-hover dataTable no-footer">-->
+<!--							<thead class="text-center">-->
+<!--								<th>Employee </th>-->
+<!--								<th>Designation</th>-->
+<!--								<th>Subject</th>-->
+<!--								<th>Application Date</th>-->
+<!--								<th>From Date</th>-->
+<!--								<th>To Date</th>-->
+<!--								<th>Reason</th>-->
+<!--								<th>Total Taken Leave</th>-->
+<!--								<th>Remaining Leave</th>-->
+<!--								<th>Status</th>-->
+<!--								<th>Approval</th>-->
+<!--							</thead>-->
+<!--							<tbody>-->
+<!--								{% for i in leave_form %}-->
+<!--							<tr>-->
+<!--								<td><a href="profile.html">{{i.employee_name}} <span class="designation">Web Developer</span></a></td>-->
+<!--								<td>{{i.leave_per_year}}</td>-->
+<!--								<td>{{i.leave_type.leave_name}}</td>-->
+<!--								<td>{{i.application_date}}</td>-->
+<!--								<td>{{i.from_date}}</td>-->
+<!--								<td>{{i.till_date}}</td>-->
+<!--								<td>{{i.remark}}</td>-->
+<!--								<td>{{i.total_taken_leave}}</td>-->
+<!--								<td>{{i.remaining_leave}}</td>-->
+<!--								<td>{{i.status}}</td>-->
+<!--								<td><input type="checkbox" name="approval" value="{{i.id}}"></td>-->
+
+<!--							</tr>-->
+<!--							{% endfor %}-->
+<!--							</tbody>-->
+<!--						</table>-->
+<!--					</div>-->
+<!--			  	</div>-->
+<!--			  </div>-->
+
+<!--		  </div>-->
+<!--	  </div>-->
+      <div class="row">
+		  <div class="col-12">
+             <div class="card card-outline card-primary">
+              <div class="card-header py-2">
+                <h3 class="card-title"> Leave Request (for admin)</h3>
+                <!-- /.card-tools -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+					<div class="tableFixHead expendtbl" >
+					  <table id="emp_leave_tbl" class="table table-bordered table-striped commonDatatable table-hover dataTable no-footer">
+							<thead class="text-center">
+								<th>Employee </th>
+								<th>Leave Type</th>
+								<th>From Date</th>
+								<th>To Date</th>
+								<th>Subject</th>
+								<th>Status</th>
+								<th>More Detail</th>
+							</thead>
+							<tbody>
+							<tr>
+								<td><a href="profile.html">Pooja sen <span class="designation">Web Developer</span></a></td>
+								<td>Casual Leave</td>
+								<td>14/07/21</td>
+								<td>20/07/21</td>
+								<td>Going to hospital</td>
+								<td>
+								<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button>
+									<div class="dropdown-menu small_width">
+									   <ul class="navbar-nav ml-auto">
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button>
+										  </li>
+										</ul>
+									</div>
+
+								</td>
+								<td><a href="#">View</a></td>
+     						</tr>
+							<tr>
+								<td><a href="profile.html">Kanchan Yadav <span class="designation">Web Developer</span></a></td>
+								<td>Casual Leave</td>
+								<td>14/07/21</td>
+								<td>20/07/21</td>
+								<td>Going to hospital</td>
+								<td>
+									<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button>
+									<div class="dropdown-menu small_width">
+									   <ul class="navbar-nav ml-auto">
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button>
+										  </li>
+										</ul>
+									</div>
+
+								</td>
+								<td><a href="#">View</a></td>
+     						</tr>
+							<tr>
+								<td><a href="profile.html">Nikita<span class="designation">Web Developer</span></a></td>
+								<td>Casual Leave</td>
+								<td>14/07/21</td>
+								<td>20/07/21</td>
+								<td>Going to hospital</td>
+								<td>
+									<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button>
+									<div class="dropdown-menu small_width">
+									   <ul class="navbar-nav ml-auto">
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button>
+										  </li>
+										</ul>
+									</div>
+
+								</td>
+								<td><a href="#">View</a></td>
+     						</tr>
+							<tr>
+								<td><a href="profile.html">Lokesh Gandhi <span class="designation">Web Developer</span></a></td>
+								<td>Casual Leave</td>
+								<td>14/07/21</td>
+								<td>20/07/21</td>
+								<td>Going to hospital</td>
+								<td>
+									<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button>
+									<div class="dropdown-menu small_width">
+									   <ul class="navbar-nav ml-auto">
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1" data-toggle="dropdown" href="#" aria-expanded="true"><i class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button>
+										  </li>
+										  <li class="nav-item dropdown show mb-2 ml-3">
+											<button class="btn btn-white btn-sm btn-rounded" value="1"><i class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button>
+										  </li>
+										</ul>
+									</div>
+
+								</td>
+								<td><a href="#">View</a></td>
+     						</tr>
+							</tbody>
+						</table>
+					</div>
+			  	</div>
+			  </div>
+
+		  </div>
+	  </div>
+	</div>
+</div>
 
 
 
 <!--stylesheet of table	-->
-<style>
-      .tableFixHead {
-        overflow-y: auto;
-        height: 500px;
-      }
-      .tableFixHead thead th {
-        position: sticky;
-        top: 0;
-      }
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th,
-      td {
-        padding: 8px 16px;
-        border: 1px solid #ccc;
-      }
-      th {
-        background: #eee;
-      }
-    </style>
 
-<form method="post" >
-	 {% csrf_token %}
+
  <div class="modal" id="rejectModal">
 	 <div class="modal-dialog">
 		 <div class="modal-content">
@@ -67,54 +230,11 @@
  </div>
 
 
-	<div>
-	  <button class="btn btn-primary" type="submit" value="Approve" name="status" >Approve</button>
-      <button class="btn btn-primary" type="button" value="Reject" name="status" data-toggle="modal" data-target="#rejectModal">Reject</button>
-      <a href="" class="btn btn-primary"   onclick="window.location.reload">Cancel</a>
-	</div><br>
-    <p>Leave request</p>
-            <div class="tableFixHead ">
-				<table class="table table-striped table-responsive-md btn-table">
-					<thead>
-						<th>Employee Name</th>
-						<th>Designation</th>
-						<th>Subject</th>
-						<th>Application Date</th>
-						<th>From Date</th>
-						<th>To Date</th>
-						<th>Reason</th>
-						<th>Total Taken Leave</th>
-						<th>Remaining Leave</th>
-						<th>Status</th>
-						<th>Approval</th>
 
-					</thead>
-					<tbody>
-						{% for i in leave_form %}
-						<tr>
-							<td>{{i.employee_name}}</td>
-							<td>{{i.leave_per_year}}</td>
-							<td>{{i.leave_type.leave_name}}</td>
-							<td>{{i.application_date}}</td>
-							<td>{{i.from_date}}</td>
-							<td>{{i.till_date}}</td>
-							<td>{{i.remark}}</td>
-							<td>{{i.total_taken_leave}}</td>
-							<td>{{i.remaining_leave}}</td>
-							<td>{{i.status}}</td>
-							<td><input type="checkbox" name="approval" value="{{i.id}}"></td>
-
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
 </form>
 
 
 
-
-</div>
 
 
 {% endblock %}
