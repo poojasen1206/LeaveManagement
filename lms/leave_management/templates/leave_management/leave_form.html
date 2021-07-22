@@ -102,15 +102,15 @@
 
                                   <div class="form-group row">
                                         <div class="col-md-6 pr-3 pl-3 mb-2">
-                                            <label for="validationCustom01">Employee name</label>
+                                            <label for="validationCustom01">Employee name</label><span class="text-danger">*</span>
                                             <input type="text" class="form-control" name="employee_name" id="employee_name" placeholder="Employee Name" value="{{request.user.username}}" required>
                                        </div>
                                        <div class="col-md-6 pr-3 pl-3 mb-2">
-                                            <label for="date">Application Date</label>
+                                            <label for="date">Application Date</label><span class="text-danger">*</span>
                                             <input   class="form-control" id="current_Date" name="current_date">
                                        </div>
                                       <div class="col-md-6 pr-3 pl-3 mb-2">
-                                           <label for="leave_type">Leave Type :</label>
+                                           <label for="leave_type">Leave Type :</label><span class="text-danger">*</span>
                                           <select id="leave_type" name="leave_type" class="form-control" onchange="LeaveType(this.value)">
                                           <option value="" disabled hidden selected>--Select Leave Type--</option>
                                               {% for leave_types in leave_type %}
@@ -119,35 +119,55 @@
                                           </select>
                                       </div>
                                       <div class="col-md-6 pr-3 pl-3 mb-2">
-                                          <label for="remaining_leave">Remaining Leave</label>
+                                          <label for="remaining_leave">Remaining Leave</label><span class="text-danger">*</span>
                                           <input type="text" class="form-control" name="remaining_leave" id="remaining_leave" placeholder="Remaining Leave" value="0">
                                       </div>
-                                      <div class="col-md-6 pr-3 pl-3 mb-2">
-                                          <label for="date">From Date</label>
-                                          <input type="text"  class="form-control datepickstart" id="from_date" name="from_date"  onchange ="daysDifference()" placeholder="mm-dd-yyyy">
+                                      <div class="col-md-6 pr-3 pl-3 mb-2 date_field">
+                                          <label for="from_date">From Date</label><span class="text-danger">*</span>
+                                              <input type="date"  class="form-control datepickstart" id="from_date" name="from_date"  onchange ="daysDifference()" placeholder="mm-dd-yyyy">
+                                              <div class="row day_field">
+                                                <div class="col-lg-12 d-flex">
+                                                  <div class="col-md-4 mt-2 p-0">
+                                                   <label for="from_full_day">Full Day :</label>
+                                                   <input type="radio"  name="from_full_day" id="from_full_day" value="1" checked>
+                                                  </div>
+                                                  <div class="col-md-4 mt-2 p-0">
+                                                   <label for="from_first_half">First Half :</label>
+                                                   <input type="radio"  name="from_full_day" id="from_first_half" value="0.5">
+                                                  </div>
+                                                    <div class="col-md-4 mt-2 p-0">
+                                                   <label for="from_sec_half">Second Half :</label>
+                                                   <input type="radio"  name="from_full_day" id="from_sec_half" value="0.5">
+                                                  </div>
+                                                </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="col-md-6 pr-3 pl-3 mb-2 date_field" >
+                                          <label for="till_date">Till Date</label><span class="text-danger">*</span>
+                                          <input type="date" onload="getDate()" class="form-control" id="till_date" name="till_date" onchange ="daysDifference()" placeholder="mm-dd-yyyy">
+                                          <div class="row day_field">
+                                                <div class="col-lg-12 d-flex">
+                                                  <div class="col-md-4 mt-2 p-0">
+                                                   <label for="till_full_day">Full Day :</label>
+                                                   <input type="radio"  name="till_day" id="till_full_day" value="1" checked>
+                                                  </div>
+                                                  <div class="col-md-4 mt-2 p-0">
+                                                   <label for="till_first_half">First Half :</label>
+                                                   <input type="radio"  name="till_day" id="till_first_half" value="0.5">
+                                                  </div>
+                                                    <div class="col-md-4 mt-2 p-0">
+                                                   <label for="till_sec_half">Second Half :</label>
+                                                   <input type="radio"  name="till_day" id="till_sec_half" value="0.5">
+                                                  </div>
+                                                </div>
+                                          </div>
+
                                       </div>
 
                                       <div class="col-md-6 pr-3 pl-3 mb-2">
-                                          <label for="date">Till Date</label>
-                                          <input type="text" onload="getDate()" class="form-control" id="till_date" name="till_date" onchange ="daysDifference()" placeholder="mm-dd-yyyy">
-                                      </div>
-                                      <div class="col-md-6 pr-3 pl-3 mb-2">
-                                          <div class="row">
-                                                 <div class="col-lg-12">
-                                                  Total leave applied for days :<br><h style="color:32A80F" id="result" class="total_taken_leave" name="total_taken_leave"></h>
-                                                    <input type="hidden" name="total_taken_leave" id="total_taken_leave" >
-                                                 </div>
-                                                 <div class="col-lg-12 d-flex">
-                                                  <div class="col-md-6 mt-2">
-                                                   <label for="full_day">Full Day :</label>
-                                                   <input type="radio"  name="day" id="full_day" value="1">
-                                                  </div>
-                                                  <div class="col-md-6 mt-2">
-                                                   <label for="half_day">Half Day :</label>
-                                                   <input type="radio"  name="day" id="half_day" value="0.5">
-                                                  </div>
-                                              </div>
-                                          </div>
+                                          <label for="date">Subject</label><span class="text-danger">*</span>
+                                          <input type="text"  class="form-control" id="leave_subject" name="leave_subject" >
                                       </div>
                                       <div class="col-md-6 pr-3 pl-3 mb-2">
                                          <label for="myfile">Attachment</label>
@@ -155,8 +175,8 @@
                                          <span id="error-message" class="validation-error-label"></span>
                                       </div>
                                       <div class="col-md-12 pr-3 pl-3 mb-2">
-                                          <label for="remark">Remark</label>
-                                             <textarea class="form-control" name="remark" id="remark" placeholder="remark"></textarea>
+                                          <label for="remark">Reason</label>
+                                             <textarea class="form-control" name="remark" id="remark" placeholder=""></textarea>
                                       </div>
 
                                            <input type="hidden" name="status" value="pending" id="status">

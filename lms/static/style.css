@@ -33,12 +33,12 @@ td, .table th {
 }
 .expendtbl table.dataTable.dtr-column>tbody>tr>td.control:before, table.dataTable.dtr-column>tbody>tr>th.control:before {
     top: 50%;
-    left: 50%;
+    left: 35%;
     height: 16px;
     width: 16px;
     margin-top: -10px;
     margin-left: -10px;
-    display: none !important;
+    display: block;
     position: absolute;
     color: #000 !important;
     border: 2px solid white;
@@ -176,4 +176,10 @@ td, .table th {
     border-color: red;
    /* box-shadow: rgb(109, 163, 221) 0px 0px 0px 8px inset;*/
     transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+}
+
+/*Leave apply form*/
+.date_field .day_field label{
+     font-weight: 400;
+    font-size: 12px;
 }
