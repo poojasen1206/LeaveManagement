@@ -2,6 +2,8 @@
 {% load static %}
 {% block content%}
 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
 <div class="content-header">
       <div class="container-fluid">
@@ -48,7 +50,7 @@
                                         <th>LWP</th>
                                         <th>Special Leave</th>
                                       </tr>
-                                      <tr class="bg-success">
+                                      <tr class="bg-light">
                                         <td>Total</td>
                                         <td>1</td>
                                         <td>0</td>
@@ -64,7 +66,7 @@
                                         <td>0</td>
                                         <td>2</td>
                                       </tr>
-                                      <tr class="bg-warning">
+                                      <tr class="bg-light">
                                         <td>Pending</td>
                                         <td>1</td>
                                         <td>0</td>
@@ -72,7 +74,7 @@
                                         <td>0</td>
                                         <td>2</td>
                                       </tr>
-                                      <tr class="bg-info">
+                                      <tr class="bg-light">
                                         <td>Balance</td>
                                         <td>1</td>
                                         <td>0</td>
@@ -110,7 +112,7 @@
                                             <input   class="form-control" id="current_Date" name="current_date">
                                        </div>
                                       <div class="col-md-6 pr-3 pl-3 mb-2">
-                                           <label for="leave_type">Leave Type :</label><span class="text-danger">*</span>
+                                           <label for="leave_type">Leave Type </label><span class="text-danger">*</span>
                                           <select id="leave_type" name="leave_type" class="form-control" onchange="LeaveType(this.value)">
                                           <option value="" disabled hidden selected>--Select Leave Type--</option>
                                               {% for leave_types in leave_type %}
@@ -122,45 +124,67 @@
                                           <label for="remaining_leave">Remaining Leave</label><span class="text-danger">*</span>
                                           <input type="text" class="form-control" name="remaining_leave" id="remaining_leave" placeholder="Remaining Leave" value="0">
                                       </div>
-                                      <div class="col-md-6 pr-3 pl-3 mb-2 date_field">
+                                      <div class="col-md-6 pr-3 pl-3 mb-2">
                                           <label for="from_date">From Date</label><span class="text-danger">*</span>
                                               <input type="date"  class="form-control datepickstart" id="from_date" name="from_date"  onchange ="daysDifference()" placeholder="mm-dd-yyyy">
-                                              <div class="row day_field">
-                                                <div class="col-lg-12 d-flex">
-                                                  <div class="col-md-4 mt-2 p-0">
-                                                   <label for="from_full_day">Full Day :</label>
-                                                   <input type="radio"  name="from_full_day" id="from_full_day" value="1" checked>
-                                                  </div>
-                                                  <div class="col-md-4 mt-2 p-0">
-                                                   <label for="from_first_half">First Half :</label>
-                                                   <input type="radio"  name="from_full_day" id="from_first_half" value="0.5">
-                                                  </div>
-                                                    <div class="col-md-4 mt-2 p-0">
-                                                   <label for="from_sec_half">Second Half :</label>
-                                                   <input type="radio"  name="from_full_day" id="from_sec_half" value="0.5">
-                                                  </div>
-                                                </div>
-                                          </div>
+<!--                                             <input  id="from" />-->
                                       </div>
 
                                       <div class="col-md-6 pr-3 pl-3 mb-2 date_field" >
                                           <label for="till_date">Till Date</label><span class="text-danger">*</span>
                                           <input type="date" onload="getDate()" class="form-control" id="till_date" name="till_date" onchange ="daysDifference()" placeholder="mm-dd-yyyy">
-                                          <div class="row day_field">
-                                                <div class="col-lg-12 d-flex">
-                                                  <div class="col-md-4 mt-2 p-0">
-                                                   <label for="till_full_day">Full Day :</label>
-                                                   <input type="radio"  name="till_day" id="till_full_day" value="1" checked>
-                                                  </div>
-                                                  <div class="col-md-4 mt-2 p-0">
-                                                   <label for="till_first_half">First Half :</label>
-                                                   <input type="radio"  name="till_day" id="till_first_half" value="0.5">
-                                                  </div>
-                                                    <div class="col-md-4 mt-2 p-0">
-                                                   <label for="till_sec_half">Second Half :</label>
-                                                   <input type="radio"  name="till_day" id="till_sec_half" value="0.5">
-                                                  </div>
-                                                </div>
+<!--                                          <input id="to" />-->
+                                      </div>
+<!--                                      <div class="col-md-6 pr-3 pl-3 mb-2">-->
+<!--                                        <div class="row">-->
+<!--                                        <div class="col-lg-12">-->
+<!--                                        Total leave applied for days :<br><h style="color:32A80F" id="result" class="total_taken_leave" name="total_taken_leave"></h>-->
+<!--                                        <input type="text" name="total_taken_leave" id="total_taken_leave" >-->
+<!--                                        </div>-->
+<!--                                        <div class="col-lg-12 d-flex">-->
+<!--                                        <div class="col-md-6 mt-2">-->
+<!--                                        <label for="full_day">Full Day :</label>-->
+<!--                                        <input type="radio" name="day" id="full_day" value="1">-->
+<!--                                        </div>-->
+<!--                                        <div class="col-md-6 mt-2">-->
+<!--                                        <label for="half_day">Half Day :</label>-->
+<!--                                        <input type="radio" name="day" id="half_day" value="0.5">-->
+<!--                                        </div>-->
+<!--                                        </div>-->
+<!--                                        </div>-->
+<!--                                        </div>-->
+                                      <div class="col-lg-12 pr-3 pl-3 mb-2">
+                                          <div class="form-check p-0">
+                                                  <input  type="checkbox" value="" id="getBetween">
+                                                  <label class="form-check-label" for="getBetween">Half Day  </label>
+                                          </div>
+                                          <div id="results" style="display:none;">
+                                            <table class="table table-hover  leave_date_tbl">
+                                                <thead>
+                                                  <tr style="background-color: #ddd;">
+                                                    <th class="">Date</th>
+                                                    <th class="text-center">First Half</th>
+                                                    <th class="text-center">Second Half</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td>10/07/21</td>
+                                                    <td class="text-center"><input class="form-check-input" type="checkbox" value="" ></td>
+                                                    <td class="text-center"><input class="form-check-input" type="checkbox" value="" ></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="">11/07/21</td>
+                                                    <td class="text-center"><input class="form-check-input" type="checkbox" value="" ></td>
+                                                    <td class="text-center"><input class="form-check-input" type="checkbox" value="" ></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="">12/07/21</td>
+                                                    <td class="text-center"><input class="form-check-input" type="checkbox" value="" ></td>
+                                                    <td class="text-center"><input class="form-check-input" type="checkbox" value="" ></td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
                                           </div>
 
                                       </div>
@@ -211,7 +235,26 @@
 <!--This date is start from 14 days before,from today's date.-->
 <script>
 
-/*$(function() {
+
+$('#getBetween').on('click', function () {
+//e.preventDefault();
+   /* var start = $("#from").datepicker("getDate"),
+        end = $("#to").datepicker("getDate"),
+        currentDate = new Date(start),
+        between = [] ;
+
+    while (currentDate <= end) {
+        between.push(new Date(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    $('#results').html(between.join('<br> '));*/
+    $('#results').toggle();
+});
+</script>
+<script>
+
+$(function() {
 
    $( "#from_date" ).datepicker({minDate: -14});
 
@@ -220,7 +263,7 @@
 $(function() {
     $( "#till_date" ).datepicker({minDate: -14});
   });
-*/
+
 </script>
 
 
@@ -272,6 +315,29 @@ document.getElementById('current_Date').value = today;
 
 <!--Day difference between two datapikcer -->
 <script>
+var startDate = new Date("2017-10-01"); //YYYY-MM-DD
+var endDate = new Date("2017-10-07"); //YYYY-MM-DD
+
+var getDateArray = function(start, end) {
+    var arr = new Array();
+    var dt = new Date(start);
+    while (dt <= end) {
+        arr.push(new Date(dt));
+        dt.setDate(dt.getDate() + 1);
+    }
+    return arr;
+}
+
+var dateArr = getDateArray(startDate, endDate);
+
+// Output
+document.write("<p>Start Date: " + startDate + "</p>");
+document.write("<p>End Date: " + endDate + "</p>");
+document.write("<p>Date Array</p>")
+for (var i = 0; i < dateArr.length; i++) {
+    document.write("<p>" + dateArr[i] + "</p>");
+}
+
 function daysDifference() {
          //define two variables and fetch the input from HTML form
          var date1 = document.getElementById("from_date").value ;
@@ -279,7 +345,18 @@ function daysDifference() {
 
          var date2 = document.getElementById("till_date").value;
          var dateI2 = date2.replace(/(\d\d)\/(\d\d)\/(\d{4})/, "$3-$1-$2");
+    var
+    arr = new Array(),
+    dt = new Date(date1);
 
+  while (dt <= date2) {
+    arr.push(new Date(dt));
+    dt.setDate(dt.getDate() + 1);
+  }
+alert(arr);
+  //return arr;
+
+ //   $('#results').html(between.join('<br> '));
          if (date2 != ''){
 
          $.ajax({

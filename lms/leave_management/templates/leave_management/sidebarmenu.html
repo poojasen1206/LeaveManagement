@@ -16,7 +16,13 @@
           <img src="{% static 'assets/img/profiles/avatar-13.jpg'%}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Lokesh Gandhi</a>
+          <a href="#" class="d-block">
+              {%if request.user.is_superuser == 1 or request.user.role == 'Admin' or request.user.role == 'admin' %}
+              {{request.user.username}}
+              {% else%}
+              {{request.user.first_name}} {{request.user.last_name}}
+              {% endif %}
+          </a>
         </div>
       </div>
 

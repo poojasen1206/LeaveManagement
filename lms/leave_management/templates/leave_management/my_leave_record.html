@@ -22,57 +22,57 @@
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
-		<div class="row">
-		  <div class="col-12">
-		    <div class="card card-outline card-primary">
-              <div class="card-header py-2">
-                <h3 class="card-title">Filter</h3>
+		<!--<div class="row">-->
+		<!--  <div class="col-12">-->
+		<!--    <div class="card card-outline card-primary">-->
+  <!--            <div class="card-header py-2">-->
+  <!--              <h3 class="card-title">Filter</h3>-->
 
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                </div>
+  <!--              <div class="card-tools">-->
+  <!--                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>-->
+  <!--                </button>-->
+  <!--              </div>-->
                 <!-- /.card-tools -->
-              </div>
+  <!--            </div>-->
               <!-- /.card-header -->
-              <div class="card-body">
-				 <form method="post" id="leave_record_filter" >
-				{% csrf_token %}
+  <!--            <div class="card-body">-->
+		<!--		 <form method="post" id="leave_record_filter" >-->
+		<!--		{% csrf_token %}-->
 
 
-					<div class="form-row">
-						<div class="col-md-3 mb-3">
-							 <label for="leave_type">Leave Name</label>
-							  <select id="leave_type" name="leave_type" class="form-control"  value="{{request.POST.leave_type}}">
-							  <option value="" disabled hidden selected>--Select Leave Name--</option>
-								  {% for leave_types in leave_type %}
-							  <option value="{{leave_types.id}}">{{leave_types.leave_name}}</option>
-							  {% endfor %}
-					  </select>
+		<!--			<div class="form-row">-->
+		<!--				<div class="col-md-3 mb-3">-->
+		<!--					 <label for="leave_type">Leave Name</label>-->
+		<!--					  <select id="leave_type" name="leave_type" class="form-control"  value="{{request.POST.leave_type}}">-->
+		<!--					  <option value="" disabled hidden selected>--Select Leave Name--</option>-->
+		<!--						  {% for leave_types in leave_type %}-->
+		<!--					  <option value="{{leave_types.id}}">{{leave_types.leave_name}}</option>-->
+		<!--					  {% endfor %}-->
+		<!--			  </select>-->
 
-						</div>
+		<!--				</div>-->
 
-						<div class="col-md-3 mb-3">
-							<label for="date">From Date</label>
-							<input type="date" class="form-control" id="from_date" name="from_date">
-						</div>
+		<!--				<div class="col-md-3 mb-3">-->
+		<!--					<label for="date">From Date</label>-->
+		<!--					<input type="date" class="form-control" id="from_date" name="from_date">-->
+		<!--				</div>-->
 
-						<div class="col-md-3 mb-3">
-							<label for="date">To Date</label>
-							<input type="date" class="form-control" id="to_date" name="to_date">
-						</div>
-						<div  class="col-md-3 mb-3 pt-4 mt-1 text-right">
-							<button class="btn btn-primary" style="border-radius:20px;" type="submit">Search</button>
-							<a href="" class="btn btn-primary" style="border-radius:20px;color:#fff;font-weight:600;" onclick="window.location.reload">Clear</a>
-						</div>
-					</div>
+		<!--				<div class="col-md-3 mb-3">-->
+		<!--					<label for="date">To Date</label>-->
+		<!--					<input type="date" class="form-control" id="to_date" name="to_date">-->
+		<!--				</div>-->
+		<!--				<div  class="col-md-3 mb-3 pt-4 mt-1 text-right">-->
+		<!--					<button class="btn btn-primary" style="border-radius:20px;" type="submit">Search</button>-->
+		<!--					<a href="" class="btn btn-primary" style="border-radius:20px;color:#fff;font-weight:600;" onclick="window.location.reload">Clear</a>-->
+		<!--				</div>-->
+		<!--			</div>-->
 
-				</form>
-              </div>
+		<!--		</form>-->
+  <!--            </div>-->
               <!-- /.card-body -->
-            </div>
-	  	  </div>
-	  </div>
+  <!--          </div>-->
+	 <!-- 	  </div>-->
+	 <!-- </div>-->
 <!--	  <div class="row">-->
 <!--		  <div class="col-12">-->
 <!--             <div class="card">-->
@@ -162,11 +162,15 @@
 
 <!--		  </div>-->
 <!--	  </div>-->
+
+	{% if request.user.role == 'Employee' or request.user.role == 'employee' %}
+	  <form method="post" id="leave_record" >
+	       {% csrf_token %}
 		<div class="row">
 		  <div class="col-12">
-             <div class="card">
+             <div class="card card-outline card-primary">
               <div class="card-header py-2">
-                <h3 class="card-title"> Leave Record (for Employee)</h3>
+                <h3 class="card-title"> Leave Record</h3>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
@@ -189,54 +193,46 @@
 							</tr>
 						  </thead>
 						  <tbody>
+						  {% for i in leave_form %}
+
 							<tr>
 							  <td></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button></td>
-							  <td>Admin</td>
-							  <td><button class="btn btn-sm btn-rounded withdrow-color" type="submit" name="withdraw" value="" disabled>Withdraw</button></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >Extend</a></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
-							</tr>
-						    <tr>
+							  <td>{{i.leave_type.leave_name}}</td>
+							  <td>{{i.application_date}}</td>
+							  <td>{{i.from_date}}</td>
+							  <td>{{i.till_date}}</td>
+							  <td width="11%">
+									 {% if i.status == 'Approved' %}
+								  <span class="btn btn-sm not-click" value="1" ><i  class="fa fa-dot-circle" style="color: #55ce63;"></i> {{i.status}}</span>
+								  	{% elif i.status == 'Rejected' %}
+								  <span class="btn btn-sm not-click" value="1" ><i  class="fa fa-dot-circle" style="color: #f62d51;"></i> {{i.status}}</span>
+								  {% elif i.status == 'pending' %}
+								  <span class="btn btn-sm not-click" value="1" ><i  class="fa fa-dot-circle" style="color: #7460ee;"></i> {{i.status}}</span>
+								  {% elif i.status == 'Withdraw' %}
+								  <span class="btn  btn-sm  not-click" value="1" ><i  class="fa fa-dot-circle" style="color: #ffdc73;"></i> {{i.status}}</span>
+								  {% endif %}
+
+							  </td>
 							  <td></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button></td>
-							  <td>Admin</td>
-							  <td><button class="btn btn-sm btn-rounded withdrow-color" type="submit" name="withdraw" value="" disabled>Withdraw</button></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >Extend</a></td>
+							  <td>
+							  {% if i.status == 'Withdraw' or i.status == 'Rejected'  %}
+									<button class="btn btn-sm btn-rounded withdrow-color" type="submit" name="withdraw" value="{{i.id}}" disabled>Withdraw</button>
+									{% else %}
+									<button class="btn btn-sm btn-rounded withdrow-color" type="submit" name="withdraw" value="{{i.id}}">Withdraw</button>
+									{% endif %}
+
+							  </td>
+							  <td>
+							  {% if i.status == 'pending'%}
+									<a href="{% url 'leave_management:extend_leave' i.id %}" class="btn btn-white btn-sm btn-rounded" >Extend</a>
+									{% elif i.status == 'Approved' %}
+									<a href="{% url 'leave_management:extend_approved_leave' i.id %}" class="btn btn-white btn-sm btn-rounded" >Extend</a>
+									{% endif %}
+							  </td>
 							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
 							</tr>
-						    <tr>
-							  <td></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button></td>
-							  <td>Admin</td>
-							  <td><button class="btn btn-sm btn-rounded withdrow-color" type="submit" name="withdraw" value="" disabled>Withdraw</button></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >Extend</a></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
-							</tr>
-						    <tr>
-							  <td></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button></td>
-							  <td>Admin</td>
-							  <td><button class="btn btn-sm btn-rounded withdrow-color" type="submit" name="withdraw" value="" disabled>Withdraw</button></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >Extend</a></td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
-							</tr>
+
+						  {% endfor %}
 						  </tbody>
 						</table>
 					</div>
@@ -244,12 +240,13 @@
 			  </div>
 
 		  </div>
-	  </div>
+	    </div>
+	  {% else %}
 		<div class="row">
 		  <div class="col-12">
-             <div class="card">
+             <div class="card card-outline card-primary">
               <div class="card-header py-2">
-                <h3 class="card-title"> Leave Record (for Admin)</h3>
+                <h3 class="card-title"> Leave Record</h3>
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
@@ -259,7 +256,7 @@
 						<table  class="display nowrap expend-datatable" style="width:100%; font-size: 14px;">
 						  <thead>
 							<tr>
-							  <th>Detail</th>
+							  <th></th>
 							  <th>Name</th>
 							  <th class="all">Leave Type</th>
 							  <th class="all">Application Date</th>
@@ -271,50 +268,20 @@
 							</tr>
 						  </thead>
 						  <tbody>
+						  {% for i in leave_form %}
 							<tr>
-							  <td><button class="clickable btn btn-white btn-sm btn-rounded"><i class="fas fa-plus"></i></button></td>
-							  <td><a href="profile.html">Pooja Sen<span class="designation">Web Developer</span></a></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button></td>
+							  <td></td>
+							  <td><a href="profile.html">{{i.employee_name}}<span class="designation">Web Developer</span></a></td>
+							  <td>{{i.leave_type.leave_name}}</td>
+							  <td>{{i.application_date}}</td>
+							  <td>{{i.from_date}}</td>
+							  <td>{{i.till_date}}</td>
+							  <td width="11%"><span class="btn btn-sm not-click" value="1" ><i  class="fa fa-dot-circle" style="color: #55ce63;"></i> {{i.status}}</span></td>
 							  <td>Admin</td>
 							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
 							</tr>
-						    <tr>
-							  <td><button class="clickable btn btn-white btn-sm btn-rounded"><i class="fas fa-plus"></i></button></td>
-							  <td><a href="profile.html">Pooja Sen<span class="designation">Web Developer</span></a></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #7460ee"></i> Pending</button></td>
-							  <td>Admin</td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
-							</tr>
-						    <tr>
-							  <td><button class="clickable btn btn-white btn-sm btn-rounded"><i class="fas fa-plus"></i></button></td>
-							  <td><a href="profile.html">Pooja Sen<span class="designation">Web Developer</span></a></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #55ce63;"></i> Approved</button></td>
-							  <td>Admin</td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
-							</tr>
-						    <tr>
-							  <td><button class="clickable btn btn-white btn-sm btn-rounded"><i class="fas fa-plus"></i></button></td>
-							  <td><a href="profile.html">Pooja Sen<span class="designation">Web Developer</span></a></td>
-							  <td>Priviledge Leave</td>
-							  <td>July 14, 2021</td>
-							  <td>July 14, 2021</td>
-							  <td>July 15, 2021</td>
-							  <td width="11%"><button class="btn btn-white btn-sm btn-rounded" value="1" ><i  class="fa fa-dot-circle" style="color: #f62d51;"></i> Reject</button></td>
-							  <td>Admin</td>
-							  <td><a href="" class="btn btn-white btn-sm btn-rounded" >View</a></td>
-							</tr>
+
+						  {% endfor %}
 						  </tbody>
 						</table>
 					</div>
@@ -323,6 +290,8 @@
 
 		  </div>
 	  </div>
+	  </form>
+	{% endif %}
 	</div>
 </div>
 
@@ -330,28 +299,6 @@
 
 
 
-<script>
-var table = $('.expend-datatable').DataTable({
-  responsive: {
-    details: {
-      type: 'column'
-    }
-  },
-  columnDefs: [{
-    className: 'control',
-    orderable: false,
-    targets: 0
-  }],
-  order: [1, 'asc']
-});
-
-$('#btn-show-all-doc').on('click', expandCollapseAll);
-
-function expandCollapseAll() {
-  table.rows('.parent').nodes().to$().find('td:first-child').trigger('click').length ||
-  table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click')
-}
-</script>
 
 
  <form name="leaveType" id="leaveType" method="post" action=" " autocomplete="off">
@@ -496,6 +443,29 @@ function expandCollapseAll() {
 
 
 
+
+<script>
+var table = $('.expend-datatable').DataTable({
+  responsive: {
+    details: {
+      type: 'column'
+    }
+  },
+  columnDefs: [{
+    className: 'control',
+    orderable: false,
+    targets: 0
+  }],
+  order: [1, 'asc']
+});
+
+$('#btn-show-all-doc').on('click', expandCollapseAll);
+
+function expandCollapseAll() {
+  table.rows('.parent').nodes().to$().find('td:first-child').trigger('click').length ||
+  table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click')
+}
+</script>
 
 <!--For current date -->
 <script>

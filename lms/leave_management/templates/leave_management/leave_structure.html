@@ -76,7 +76,7 @@
 <!--								{% endfor %}-->
 <!--							</tbody>-->
 <!--						</table>-->
-					    <table class="table table-bordered table-striped commonDatatable table-hover dataTable no-footer">
+				        <table class="table table-bordered table-striped commonDatatable table-hover dataTable no-footer">
 							<thead class="text-center">
 								<th>S.no</th>
 								<th>Leave Type</th>
@@ -85,26 +85,18 @@
 								<th>Action</th>
 							</thead>
 							<tbody>
+							    {% for i in leave_type %}
 								<tr>
-									<td> 1</td>
-									<td>Casual Leave</td>
-									<td>Hour</td>
-									<td>12</td>
+									<td> {{ forloop.counter }}</td>
+									<td>{{i.leave_name}}</td>
+									<td>Day</td>
+									<td>{{i.leave_per_year}}</td>
 									<td class="text-center">
-									  <a href="#"><i class="fa fa-edit mr-1"></i></a>|
-									  <a href="#" onclick="return confirm('Are you sure you want to delete leave type?');"><i class="fa fa-trash" style="color:red;"></i></a>
+									  <a href="{% url 'leave_management:edit_leave_type' i.id %}"><i class="fa fa-edit mr-1"></i></a>|
+									  <a href="{% url 'leave_management:delete_leave_type' i.id %}" onclick="return confirm('Are you sure you want to delete leave type?');"><i class="fa fa-trash" style="color:red;"></i></a>
 								  </td>
 								</tr>
-								<tr>
-									<td> 2</td>
-									<td>Seek Leave</td>
-									<td>Hour</td>
-									<td>12</td>
-									<td class="text-center">
-									  <a href="#"><i class="fa fa-edit mr-1"></i></a>|
-									  <a href="#" onclick="return confirm('Are you sure you want to delete leave type?');"><i class="fa fa-trash" style="color:red;"></i></a>
-								  </td>
-								</tr>
+								 {% endfor %}
 							</tbody>
 						</table>
 				  </div>
@@ -114,7 +106,7 @@
 								<th>S.no</th>
 								<th>Holiday Name</th>
 								<th>Date</th>
-								<th>Day</th>
+								<!--<th>Day</th>-->
 								<th>Country</th>
 								<th>Action</th>
 							</thead>
@@ -124,7 +116,7 @@
 									<td> {{ forloop.counter }}</td>
 									<td>{{i.holiday_name}}</td>
 									<td>{{i.date}}</td>
-									<td>Monday</td>
+									<!--<td>Tuesday</td>-->
 									<td>{{i.country}}</td>
 									 <td class="text-center">
 									  <a href="{% url 'leave_management:edit_holiday' i.id %}"><i class="fa fa-edit mr-1"></i></a>|
@@ -134,9 +126,9 @@
 								{% endfor %}
 							</tbody>
 						</table>
-                  </div>
+				  </div>
                   <div class="tab-pane fade" id="custom-tabs-four-messages" role="tabpanel" aria-labelledby="custom-tabs-four-messages-tab">
-						<table id="" class="table table-bordered table-striped commonDatatable table-hover dataTable no-footer">
+                  		<table id="" class="table table-bordered table-striped commonDatatable table-hover dataTable no-footer">
 							<thead class="text-center">
 								<th>S.no</th>
 								<th>Day</th>
@@ -183,12 +175,13 @@
 								{% endfor %}
 							</tbody>
 						</table>
-                  </div>
+
+				  </div>
                   <div class="tab-pane fade" id="custom-tabs-four-settings" role="tabpanel" aria-labelledby="custom-tabs-four-settings-tab">
 
 
 					  <div class="col">
-						  <h3>Guidelines for Leave Policy</h3>
+						 <h3>Guidelines for Leave Policy</h3>
 						  <h5> A Company HR Leave Policy for Employees</h5>
 						  <ol class="pl-3">
 							 {% for i in leave_policy %}
@@ -207,11 +200,10 @@
         <!-- /.card -->
 
   <form name="leaveType" id="leaveType" method="post" action=" " autocomplete="off">
-    <div class="modal fade" id="addNewProductModalForm" tabindex="-1" role="dialog"
-         aria-labelledby="addNewProductModalFormLabel" aria-hidden="true">
+    <div class="modal fade" id="addNewProductModalForm" tabindex="-1" role="dialog" aria-labelledby="addNewProductModalFormLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header card-primary card-outline py-1">
             <h5 class="modal-title" id="addNewProductModalFormLabel">Add Leave</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -219,127 +211,9 @@
           </div>
           <div class="modal-body">
             <div style="border:1px solid #ccc; border-radius:5px;margin-left:10px;margin-bottom:10px;">
-              <p style="background-color:#d8d8d8;padding:5px;"><b>Leave Type Information</b></p>
-              <div class="form-group row" style="padding-left:20px; padding-right:20px;">
-                <div class="col-sm-6">
-                	{% csrf_token %}
-					 <!-- Tab links -->
-					<div class="tab">
-					  <button type="button" class="tablinks" onclick="openCity(event, 'leave_type')">Leave Type</button>
-					  <button type="button" class="tablinks" onclick="openCity(event, 'holiday')">Holiday</button>
-					  <button type="button" class="tablinks" onclick="openCity(event, 'work_week')">Work Week</button>
-					  <button type="button" class="tablinks" onclick="openCity(event, 'leave_policy')">Leave Policy</button>
-					</div>
-
-					<!-- Tab content -->
-					<div id="leave_type" class="tabcontent">
-					   <div class="form-group">
-						 <div class="col-md-6 mb-3">
-						  <label for="leave_name">Leave name</label>
-						  <input type="text" class="form-control" name="leave_name" id="leave_name" placeholder="Enter Leave Name">
-						 </div>
-					   </div>
-
-					  <div class="form-group">
-						<div class="col-md-6 mb-3">
-						 <label for="leave_rule">Leave Rule</label>
-						 <input type="text" class="form-control" name="leave_rule" id="leave_rule" placeholder="leave Rule">
-						</div>
-					  </div>
-
-					  <div class="form-group">
-						<div class="col-md-6 mb-3">
-						 <label for="leave_per_year">Leave per Year</label>
-						 <input type="text" class="form-control" name="leave_per_year" id="leave_per_year" placeholder="Leave Per Year">
-						</div>
-					  </div>
-
-					  <div class="form-group">
-						<div class="col-md-6 mb-3">
-						 <label for="leave_carried_forward">Leave Carried Forward</label>
-						 <input type="text" class="form-control" name="leave_carried_forward" id="leave_carried_forward" placeholder="Leave Carried Forward">
-						</div>
-					  </div>
-						<div>
-							<input type="hidden" name="leave_type" id="leave_type" value="Leave type">
-						</div>
-
-					</div>
-
-
-					<div id="holiday" class="tabcontent">
-					   <div class="form-group">
-						 <div class="col-md-6 mb-3">
-						  <label for="holiday_name">Holiday Name</label>
-						  <input type="text" class="form-control" name="holiday_name" id="holiday_name" placeholder="Enter Holiday">
-						 </div>
-					   </div>
-
-					   <div class="form-group">
-						 <div class="col-md-6 mb-3">
-						  <label for="date">Date</label>
-						  <input type="date" onload="getDate()" class="form-control" name="date" id="date" placeholder="Enter Date">
-						 </div>
-					   </div>
-
-					   <div class="form-group">
-						 <div class="col-md-6 mb-3">
-						  <label for="country">Country</label>
-						  <input type="text" class="form-control" name="holiday_country" id="country" placeholder="Enter Country">
-						 </div>
-					   </div>
-
-						<div>
-							<input type="hidden" name="holiday" id="holiday" value="Holiday">
-						</div>
-					</div>
-
-					<div id="work_week" class="tabcontent">
-						<div>
-							<legend> Select your days </legend>
-							<input id="mon" type="checkbox" name="checks[]" value="Monday">
-							<label for="mon">Monday</label><br>
-							<input id="tues" type="checkbox" name="checks[]" value="Tuesday">
-							<label for="tues">Tuesday</label><br>
-							<input id="wed" type="checkbox" name="checks[]" value="Wednesday">
-							<label for="wed">Wednesday</label><br>
-							<input id="thu" type="checkbox" name="checks[]" value="Thursday">
-							<label for="thu">Thursday</label><br>
-							<input id="fri" type="checkbox" name="checks[]" value="Friday">
-							<label for="fri">Friday</label><br>
-							<input id="sat" type="checkbox" name="checks[]" value="Saturday">
-							<label for="sat">Saturday</label><br>
-							<input id="sun" type="checkbox" name="checks[]" value="Sunday">
-							<label for="sun">Sunday</label>
-						</div><br>
-
-					   <div class="form-group">
-						 <div class="col-md-6 mb-3">
-						  <label for="country">Country</label>
-						  <input type="text" class="form-control" name="work_week_country" id="country" placeholder="Enter Country">
-						 </div>
-					   </div>
-
-						<div>
-							<input type="hidden" name="work_week" id="work_week" value="Work Week">
-						</div>
-					</div>
-					<div id="leave_policy" class="tabcontent">
-						<div class="form-group">
-							<div class="col-md-12 mb-6">
-							<legend> Define your policy </legend>
-							<textarea class="leave_policy" id="leave_policy"  name="leave_policy" rows="3" cols="55"></textarea>
-							</div>
-						</div>
-					</div>
-
-				</div>
-              </div>
+               <div class="form-group row" style="padding-left:20px; padding-right:20px;">			  </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" id="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </div>
+		  </div>
         </div>
       </div>
     </div>

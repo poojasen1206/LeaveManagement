@@ -21,14 +21,13 @@
   <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
   <!-- Bootstrap 4 -->
   <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}">
   <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
   <!-- AdminLTE App -->
   <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
    <link rel="stylesheet" href="{% static 'style.css'%}">
-    <script src="{% static 'dist/js/demo.js' %"></script>
+<!--    <script src="{% static 'dist/js/demo.js' %"></script>-->
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -74,6 +73,16 @@
 <script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
 
 
+<script>
+$(document).ready(function () {
+    var url = window.location.pathname;
+    console.log(url);
+    // Will only work if string in href matches with location
+    $('.nav-sidebar li a[href="' + url + '"]').addClass('activeLink');
+
+
+});
+</script>
 <script>
   $(function () {
     $(".commonDatatable").DataTable({
